@@ -1,5 +1,5 @@
 {
-	description = "Web interface for Grayjay Desktop";
+	description = "Grayjay Desktop";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -11,7 +11,7 @@
 	}: let
 		system = "x86_64-linux";
 		pkgs = nixpkgs.legacyPackages.${system};
-		version = "0.0.0";
+		version = "3";
 
 		sourceRepo =
 			pkgs.fetchFromGitHub {
@@ -27,21 +27,18 @@
 				name = "grayjay-desktop-web";
 				inherit version;
 
-				src = "${sourceRepo}/Grayjay.Desktop.Web";
+				src = sourceRepo;
 
-				# TODO: port package.json to flake
-				npmDepsHash = "sha256-pTEbMSAJwTY6ZRriPWfBFnRHSYufSsD0d+hWGz35xFM=";
+				# postBuild = ''
+				# 	cp -r ./dist $out/
+				# '';
 
-				postBuild = ''
-					cp -r ./dist $out/
-				'';
-
-				fixupPhase = ''
-					rm -rf $out/lib
-				'';
+				# fixupPhase = ''
+				# 	rm -rf $out/lib
+				# '';
 
 				meta = {
-					description = "Grayjay Desktop's web-based interface";
+					description = "Grayjay Desktop: Follow creators, not platforms";
 				};
 			};
 	};
